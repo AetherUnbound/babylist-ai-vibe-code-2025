@@ -4,7 +4,7 @@ from ppb.events import KeyPressed
 
 class Player(Sprite):
     position = Vector(0, 0)  # Start position at the center
-    image = Image("assets/player.png")  # Use Image resource class
+    image = Image("assets/baby_base.png")  # Use Image resource class
     speed = 0.25  # Movement speed per key press
     
     def on_key_pressed(self, event: KeyPressed, signal):

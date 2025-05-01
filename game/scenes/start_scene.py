@@ -5,7 +5,7 @@ class StartScene(Scene):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Background will be our splash screen
-        self.background = Image("assets/splash-screen.png")
+        self.background = Image("assets/splash_screen.png")
         
     def on_key_pressed(self, event, signal):
         # When any key is pressed, transition to the main game scene

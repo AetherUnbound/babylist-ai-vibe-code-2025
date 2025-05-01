@@ -1,7 +1,7 @@
 from ppb import Sprite, Image
 
 class Tile(Sprite):
-    size = 0.95  # Slightly smaller to prevent overlap issues
+    size = 0.9  # Smaller size to ensure all tiles fit in the viewport
     
     def __init__(self, is_wall=True, **kwargs):
         super().__init__(**kwargs)

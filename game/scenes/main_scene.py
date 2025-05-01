@@ -5,16 +5,16 @@ from game.objects.tile import Tile
 
 class MainScene(Scene):
     # Define constants for dungeon generation
-    GRID_WIDTH = 40  # 800 pixels / 20 pixels per tile
-    GRID_HEIGHT = 30  # 600 pixels / 20 pixels per tile
+    GRID_WIDTH = 32  # Reduced from 40 to ensure visibility
+    GRID_HEIGHT = 24  # Reduced from 30 to ensure visibility
     MIN_ROOM_SIZE = 3
-    MAX_ROOM_SIZE = 8
-    MAX_ROOMS = 15
+    MAX_ROOM_SIZE = 7  # Reduced from 8 to keep rooms proportional
+    MAX_ROOMS = 12  # Reduced from 15 to prevent overcrowding
     
     # Set camera for the scene
     # This ensures everything is visible
     default_camera_position = Vector(0, 0)
-    default_camera_zoom = 0.8  # Adjust this to fit the dungeon in view
+    default_camera_zoom = 0.65  # More aggressive zoom to fit everything
     
     def __init__(self, **props):
         super().__init__(**props)
@@ -108,8 +108,10 @@ class MainScene(Scene):
     
     def add_tiles(self):
         # Add all tiles to the scene based on the grid
-        for x in range(self.GRID_WIDTH):
-            for y in range(self.GRID_HEIGHT):
+        # Ensure a 1-tile border around the edge to prevent cutoff
+        border = 1
+        for x in range(border, self.GRID_WIDTH - border):
+            for y in range(border, self.GRID_HEIGHT - border):
                 tile = Tile(is_wall=self.grid[x][y])
                 tile.position = self.grid_to_world(x, y)
                 self.add(tile)
