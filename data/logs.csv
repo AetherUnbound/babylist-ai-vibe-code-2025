@@ -1,0 +1,3 @@
+timestamp,round,phase,event_type,reason
+2025-05-03 04:57:23,1,exit,collision,Hit by alien
+2025-05-03 04:57:43,1,exit,keypress,Wrong phase switch
