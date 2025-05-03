@@ -37,20 +37,28 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Diaper Dungeons")
 clock = pygame.time.Clock()
 
-# Load assets
-binky_full = pygame.image.load("assets/sprites/binky_full.png")
-binky_empty = pygame.image.load("assets/sprites/binky_empty.png")
-baby_sprites = {
-    "left": pygame.transform.scale(pygame.image.load("assets/sprites/baby_left.png"), (40, 40)),
-    "right": pygame.transform.scale(pygame.image.load("assets/sprites/baby_right.png"), (40, 40)),
-    "forward": pygame.transform.scale(pygame.image.load("assets/sprites/baby_forward.png"), (40, 40))
-}
-alien_sprite = pygame.transform.scale(pygame.image.load("assets/sprites/alien.png"), (40, 40))
-intro_image = pygame.transform.scale(pygame.image.load("assets/sprites/intro_image.png"), (SCREEN_WIDTH, SCREEN_HEIGHT))
-instructions_image = pygame.transform.scale(pygame.image.load("assets/sprites/instructions_image.png"), (SCREEN_WIDTH, SCREEN_HEIGHT))
+# Clear pygame cache to ensure fresh image loading
+pygame.display.get_surface()  # Initialize display first
+pygame.display.flip()  # Update display
+pygame.time.wait(100)  # Short wait
 
-# Load bottle sprite
-bottle_sprite = pygame.transform.scale(pygame.image.load("assets/sprites/bottle.png"), (40, 40))
+# Load assets - force reload with convert_alpha()
+binky_full = pygame.image.load("assets/sprites/binky_full.png").convert_alpha()
+binky_empty = pygame.image.load("assets/sprites/binky_empty.png").convert_alpha()
+baby_sprites = {
+    "left": pygame.transform.scale(pygame.image.load("assets/sprites/baby_left.png").convert_alpha(), (40, 40)),
+    "right": pygame.transform.scale(pygame.image.load("assets/sprites/baby_right.png").convert_alpha(), (40, 40)),
+    "forward": pygame.transform.scale(pygame.image.load("assets/sprites/baby_forward.png").convert_alpha(), (40, 40))
+}
+alien_sprite = pygame.transform.scale(pygame.image.load("assets/sprites/alien.png").convert_alpha(), (40, 40))
+
+# Force reload intro image - this prevents caching issues
+intro_path = "assets/sprites/introduction_image.png"
+intro_image = pygame.transform.scale(pygame.image.load(intro_path).convert_alpha(), (SCREEN_WIDTH, SCREEN_HEIGHT))
+instructions_image = pygame.transform.scale(pygame.image.load("assets/sprites/rules.png").convert_alpha(), (SCREEN_WIDTH, SCREEN_HEIGHT))
+
+# Load bottle sprite - force reload
+bottle_sprite = pygame.transform.scale(pygame.image.load("assets/sprites/bottle.png").convert_alpha(), (40, 40))
 
 def load_sound_safe(path):
     if not os.path.exists(path):
@@ -71,7 +79,7 @@ class LaserBeam(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         super().__init__()
         self.image = pygame.Surface((20, 5))
-        self.image.fill(PURPLE)
+        self.image.fill(YELLOW)  # Changed from PURPLE to YELLOW for attack color
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.direction = direction
